@@ -186,9 +186,12 @@ class _RegisterPageState extends State<RegisterPage> {
       await authService
           .registerUserwithEmailandPassword(fullName, email, password)
           .then((value) {
-        if (value == true) {}
-        else{
-          _isLoading = false;
+        if (value == true) {
+        } else {
+          showSnackBar(context, Colors.red, value.toString());
+          setState(() {
+            _isLoading = false;
+          });
         }
       });
     }
