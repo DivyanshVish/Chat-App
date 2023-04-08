@@ -1,8 +1,10 @@
+import 'package:chat_app_new/helper/helper_function.dart';
 import 'package:chat_app_new/pages/login_page.dart';
 import 'package:chat_app_new/service/auth_services.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app_new/widgets/widgets.dart';
+import 'home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -185,8 +187,13 @@ class _RegisterPageState extends State<RegisterPage> {
       });
       await authService
           .registerUserwithEmailandPassword(fullName, email, password)
-          .then((value) {
+          .then((value) async{
         if (value == true) {
+          await HelperFunctions.saveUserLoggedInStatus(true);
+          await HelperFunctions.saveUserEmail(email);
+          await HelperFunctions.saveUserName(fullName);
+          nextScreenReplace(context, const HomePage());
+
         } else {
           showSnackBar(context, Colors.red, value.toString());
           setState(() {
