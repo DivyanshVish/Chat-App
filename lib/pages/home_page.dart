@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   String getName(String res) {
-    return res.substring(0, res.indexOf("_") + 1);
+    return res.substring(res.indexOf("_") + 1);
   }
 
   gettingUserData() async {
@@ -335,9 +335,10 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   int reverseIndex = snapshot.data['groups'].length - index - 1;
                   return GroupTile(
-                      groupName: getName(snapshot.data["groups"][reverseIndex]),
-                      userName: snapshot.data["fullName"],
-                      groupId: getId(snapshot.data["groups"][reverseIndex]));
+                    groupId: getId(snapshot.data["groups"][reverseIndex]),
+                    groupName: getName(snapshot.data["groups"][reverseIndex]),
+                    userName: snapshot.data["fullName"],
+                  );
                 },
               );
             } else {
