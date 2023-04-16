@@ -1,32 +1,19 @@
-import 'package:chat_app_new/helper/helper_function.dart';
 import 'package:chat_app_new/pages/home_page.dart';
 import 'package:chat_app_new/pages/login_page.dart';
 import 'package:chat_app_new/shared/constant.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+
+import 'helper/helper_function.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: FirebaseOptions(
-        apiKey: Constants.apiKey,
-        appId: Constants.appId,
-        messagingSenderId: Constants.messagingSenderId,
-        projectId: Constants.projectId,
-        storageBucket: Constants.storageBucket,
-      ),
-    );
-  } else {
-    await Firebase.initializeApp();
-  }
-
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -35,27 +22,27 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool _isSignedIn = false;
 
+  getUserLoggedInStatus() async {
+    await HelperFunctions.getUserLoggedInStatus().then((value) {
+      if (value != null) {
+        setState(() {
+          _isSignedIn = value;
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     getUserLoggedInStatus();
   }
 
-  getUserLoggedInStatus() async {
-    await HelperFunctions.getUserLoggedInStatus().then((value) {
-      if (value != null) {
-       setState(() {
-         _isSignedIn = value;
-       });
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: Constants().primaryColor,
+        primaryColor: Constant().primaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
       debugShowCheckedModeBanner: false,

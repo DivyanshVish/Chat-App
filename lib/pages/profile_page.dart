@@ -1,16 +1,15 @@
-import 'package:chat_app_new/pages/home_page.dart';
-import 'package:chat_app_new/service/auth_services.dart';
 import 'package:flutter/material.dart';
 
 import '../helper/helper_function.dart';
+import '../service/auth_services.dart';
 import '../widgets/widgets.dart';
+import 'home_page.dart';
 import 'login_page.dart';
 
 class ProfilePage extends StatefulWidget {
   String userName;
-  String email;
-  ProfilePage({Key? key, required this.userName, required this.email})
-      : super(key: key);
+  String userEmail;
+  ProfilePage({super.key, required this.userName, required this.userEmail});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -18,16 +17,15 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   AuthService authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0,
         title: const Text(
-          "Profile",
+          'Profile',
           style: TextStyle(
-            color: Colors.white,
             fontSize: 27,
             fontWeight: FontWeight.bold,
           ),
@@ -35,12 +33,12 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       drawer: Drawer(
         child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 50),
+          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
           children: <Widget>[
-            Icon(
+            const Icon(
               Icons.account_circle,
-              size: 130,
-              color: Colors.grey[700],
+              size: 150,
+              color: Colors.grey,
             ),
             const SizedBox(
               height: 15,
@@ -48,36 +46,42 @@ class _ProfilePageState extends State<ProfilePage> {
             Text(
               widget.userName,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
             ),
             const SizedBox(
-              height: 30,
+              height: 24,
             ),
             const Divider(
               height: 2,
+              color: Colors.grey,
             ),
             ListTile(
               onTap: () {
-                nextScreen(context, const HomePage());
+                nextScreenReplace(context, const HomePage());
               },
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              leading: const Icon(Icons.group_rounded),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 8,
+              ),
+              leading: const Icon(Icons.group),
               title: const Text(
-                "Groups",
-                style: TextStyle(color: Colors.black),
+                'Groups',
+                style: TextStyle(fontSize: 16),
               ),
             ),
             ListTile(
               onTap: () {},
-              selectedColor: Theme.of(context).primaryColor,
               selected: true,
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              leading: const Icon(Icons.group_rounded),
+              selectedColor: Theme.of(context).primaryColor,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 8,
+              ),
+              leading: const Icon(Icons.person),
               title: const Text(
-                "Profile",
-                style: TextStyle(color: Colors.black),
+                'Profile',
+                style: TextStyle(fontSize: 16),
               ),
             ),
             ListTile(
@@ -123,8 +127,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               await HelperFunctions.saveUserLoggedInStatus(
                                   false);
                               await HelperFunctions.saveUserEmail("");
-                              authService.signOut().whenComplete(
-                                () {
+                              authService.signout().whenComplete(
+                                    () {
                                   nextScreenReplace(context, const LoginPage());
                                 },
                               );
@@ -152,56 +156,67 @@ class _ProfilePageState extends State<ProfilePage> {
                       );
                     });
               },
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              leading: const Icon(Icons.exit_to_app_rounded),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 8,
+              ),
+              leading: const Icon(Icons.exit_to_app),
               title: const Text(
-                "Logout",
-                style: TextStyle(color: Colors.black),
+                'Logout',
+                style: TextStyle(fontSize: 16),
               ),
             ),
           ],
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 170),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 24,
+          vertical: 24,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Icon(
+          children: <Widget>[
+            const Icon(
               Icons.account_circle,
-              size: 150,
-              color: Colors.grey[700],
+              size: 200,
+              color: Colors.grey,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Divider(
+              height: 2,
+              color: Colors.grey,
             ),
             const SizedBox(
               height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 const Text(
-                  "Full Name :",
-                  style: TextStyle(fontSize: 17),
+                  'Full Name :',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 Text(
                   widget.userName,
-                  style: const TextStyle(fontSize: 17),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),
-            const Divider(
-              height: 20,
+            const SizedBox(
+              height: 16,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 const Text(
-                  "Email :",
-                  style: TextStyle(fontSize: 17),
+                  'Email :',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 Text(
-                  widget.email,
-                  style: const TextStyle(fontSize: 17),
+                  widget.userEmail,
+                  style: const TextStyle(fontSize: 16),
                 ),
               ],
             ),

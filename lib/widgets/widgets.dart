@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-const textInputDecoration = InputDecoration(
-  labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w300),
+const inputTextDecoration = InputDecoration(
+  labelStyle: TextStyle(
+      color: Color.fromARGB(255, 114, 114, 114), fontWeight: FontWeight.w400),
   focusedBorder: OutlineInputBorder(
     borderSide: BorderSide(
       color: Color(0xFFee7b64),
@@ -31,7 +32,7 @@ void nextScreenReplace(context, page) {
       context, MaterialPageRoute(builder: (context) => page));
 }
 
-void showSnackBar(context, color, message) {
+void showSnackbar(context, color, message) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(
